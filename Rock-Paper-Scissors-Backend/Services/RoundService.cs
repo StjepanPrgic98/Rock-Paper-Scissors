@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Rock_Paper_Scissors_Backend.Entities;
 using Rock_Paper_Scissors_Backend.Interfaces.IServices;
 using SQLitePCL;
@@ -12,8 +14,6 @@ namespace Rock_Paper_Scissors_Backend.Services
     {
         public Round CreateRound(string playerMove)
         {
-            if(!CheckIfPlayerMoveIsValid(playerMove)){return null;}
-
             Round round = new Round
             {
                 PlayerMove = playerMove,
@@ -25,7 +25,7 @@ namespace Rock_Paper_Scissors_Backend.Services
             return round;
         }
 
-        private bool CheckIfPlayerMoveIsValid(string playerMove)
+        public bool CheckIfPlayerMoveIsValid(string playerMove)
         {
             if(playerMove != "rock" && playerMove != "paper" && playerMove != "scissors")
             {
@@ -50,17 +50,17 @@ namespace Rock_Paper_Scissors_Backend.Services
         {
             if (playerMove == pcMove)
             {
-                return "Draw!";
+                return "Draw";
             }
             else if ((playerMove == "rock" && pcMove == "scissors") ||
                     (playerMove == "paper" && pcMove == "rock") ||
                     (playerMove == "scissors" && pcMove == "paper"))
             {
-                return "Victory!";
+                return "Victory";
             }
             else
             {
-                return "Loss!";
+                return "Loss";
             }
         }
     }

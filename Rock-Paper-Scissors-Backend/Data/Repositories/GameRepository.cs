@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using POS_Blagajna_Backend.Data.Repositories;
+using Rock_Paper_Scissors_Backend.DTOs;
 using Rock_Paper_Scissors_Backend.Entities;
 using Rock_Paper_Scissors_Backend.Interfaces.IRepositories;
 
@@ -17,7 +18,9 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
 
         public async Task<IEnumerable<Game>> GetListOfGames()
         {
-            return await _context.Games.ToListAsync();
+            return await _context.Games
+                .Include(x => x.Rounds)
+                .ToListAsync();
         }
 
         public async Task<int> StartNewGame(Game game)
@@ -27,13 +30,12 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
             return game.GameNumber;
         }
 
-        public async Task<Game> SaveRoundPlayed(Game game)
+        public async Task<Game> SaveGame(Game game)
         {
             _context.Games.Update(game);
             await _context.SaveChangesAsync();
             return game;
         }
-
 
         public async Task<Game> GetGameByNumber(int gameNumber)
         {
@@ -42,6 +44,5 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
                 .FirstOrDefaultAsync(x => x.GameNumber == gameNumber);
         }
 
-        
     }
 }
