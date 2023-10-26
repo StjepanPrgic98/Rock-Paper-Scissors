@@ -26,5 +26,22 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
             await _context.SaveChangesAsync();
             return game.GameNumber;
         }
+
+        public async Task<Game> SaveRoundPlayed(Game game)
+        {
+            _context.Games.Update(game);
+            await _context.SaveChangesAsync();
+            return game;
+        }
+
+
+        public async Task<Game> GetGameByNumber(int gameNumber)
+        {
+            return await _context.Games
+                .Include(x => x.Rounds)
+                .FirstOrDefaultAsync(x => x.GameNumber == gameNumber);
+        }
+
+        
     }
 }

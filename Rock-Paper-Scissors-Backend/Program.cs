@@ -27,8 +27,12 @@ builder.Services.AddCors(options =>
         });
     });
 
+builder.Services.AddScoped<IRoundRepository, RoundRepository>();
+builder.Services.AddScoped<IRoundService, RoundService>();
+
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
+
 
 var app = builder.Build();
 

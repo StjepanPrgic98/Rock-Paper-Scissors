@@ -6,10 +6,8 @@ using Rock_Paper_Scissors_Backend.Entities;
 
 namespace Rock_Paper_Scissors_Backend.Interfaces.IServices
 {
-    public interface IGameService
+    public interface IRoundService
     {
-        Task<IEnumerable<Game>> GetListOfGames();
-        Task<int> StartNewGame();
-        Task<Game> PlayRound(int gameNumber, Round round);
+        Round CreateRound(string playerMove);
     }
 }

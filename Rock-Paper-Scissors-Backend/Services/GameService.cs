@@ -32,8 +32,17 @@ namespace Rock_Paper_Scissors_Backend.Services
             return await _gameRepository.StartNewGame(game);
         }
 
+        public async Task<Game> PlayRound(int gameNumber, Round round)
+        {
+            Game game = await _gameRepository.GetGameByNumber(gameNumber);
+            if(!game.Active){return null;}
+            game.Rounds.Add(round);
 
-        // Generates a number between 100000 and 999999 that will be used as game unique number.
+            return await _gameRepository.SaveRoundPlayed(game);
+        }
+
+
+        // Generates a number between 100000 and 999999 that will be used as unique game number.
         private int GenerateGameNumber()
         {
             Random random = new Random();

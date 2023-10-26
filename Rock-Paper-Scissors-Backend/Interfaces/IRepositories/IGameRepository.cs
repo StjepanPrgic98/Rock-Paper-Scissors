@@ -11,5 +11,7 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IRepositories
     {
         Task<IEnumerable<Game>> GetListOfGames();
         Task<int> StartNewGame(Game game);
+        Task<Game> SaveRoundPlayed(Game game);
+        Task<Game> GetGameByNumber(int gameNumber);
     }
 }

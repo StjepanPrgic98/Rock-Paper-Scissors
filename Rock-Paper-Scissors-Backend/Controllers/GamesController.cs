@@ -13,8 +13,10 @@ namespace Rock_Paper_Scissors_Backend.Controllers
     public class GamesController : BaseApiController
     {
         private readonly IGameService _gameService;
-        public GamesController(IGameService gameService)
+        private readonly IRoundService _roundService;
+        public GamesController(IGameService gameService, IRoundService roundService)
         {
+            _roundService = roundService;
             _gameService = gameService;
         }
 
@@ -35,6 +37,13 @@ namespace Rock_Paper_Scissors_Backend.Controllers
         public async Task<ActionResult<int>> StartNewGame()
         {
             return await _gameService.StartNewGame();
+        }
+
+        [HttpGet("{gameNumber}/{playerMove}")]
+        public async Task<ActionResult<Game>> PlayRound(int gameNumber, string playerMove)
+        {
+            Round round = _roundService.CreateRound(playerMove);
+            return await _gameService.PlayRound(gameNumber, round);
         }
     }
 }
