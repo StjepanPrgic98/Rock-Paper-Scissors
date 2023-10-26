@@ -46,7 +46,6 @@ namespace Rock_Paper_Scissors_Backend.Services
             game.Rounds.Add(round);
 
             GameStatsDTO gameStatsDTO = GenerateGameStats(await _gameRepository.SaveGame(game));
-
             return gameStatsDTO;
         }
 
@@ -57,11 +56,8 @@ namespace Rock_Paper_Scissors_Backend.Services
             game.EndTime = DateTime.UtcNow;
 
             GameStatsDTO gameStatsDTO = GenerateGameStats(await _gameRepository.SaveGame(game));
-
             return gameStatsDTO;
         }
-
-        // Generates a number between 100000 and 999999 that will be used as unique game number.
 
         private GameStatsDTO GenerateGameStats(Game game)
         {
