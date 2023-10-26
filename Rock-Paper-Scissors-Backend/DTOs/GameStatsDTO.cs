@@ -7,8 +7,10 @@ namespace Rock_Paper_Scissors_Backend.DTOs
 {
     public class GameStatsDTO
     {
-        public int GameNumber { get; set; }
+        public int GameId { get; set; }
         public bool Active { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         public int NumberOfRounds { get; set; }
         public int Wins { get; set; }
         public int Losses { get; set; }

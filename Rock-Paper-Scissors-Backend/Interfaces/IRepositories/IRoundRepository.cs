@@ -9,6 +9,6 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IRepositories
 {
     public interface IRoundRepository
     {
-        Task<Round> CreateRound();
+        
     }
 }

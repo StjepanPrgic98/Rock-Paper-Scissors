@@ -22,22 +22,16 @@ namespace Rock_Paper_Scissors_Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetListofGames()
+        public async Task<ActionResult<IEnumerable<GameStatsDTO>>> GetListofGames()
         {
-            try
-            {
-                return Ok(await _gameService.GetListOfGames());
-            }
-            catch(Exception ex)
-            {
-                return BadRequest($"Failed to get list of games! \n {ex}");
-            }
+            return Ok(await _gameService.GetListOfGames());
         }
 
-        [HttpGet("{gameNumber}")]
-        public async Task<ActionResult<GameStatsDTO>> GetGameByNumber(int gameNumber)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GameStatsDTO>> GetGameById(int id)
         {
-            return await _gameService.GetGameByNumber(gameNumber);
+            if(!_gameService.CheckIfGameExists(id)){NotFound("Game doesnt exist!");}
+            return await _gameService.GetGameById(id);
         }
 
         [HttpGet("start")]
@@ -46,19 +40,21 @@ namespace Rock_Paper_Scissors_Backend.Controllers
             return await _gameService.StartNewGame();
         }
 
-        [HttpGet("{gameNumber}/{playerMove}")]
-        public async Task<ActionResult<GameStatsDTO>> PlayRound(int gameNumber, string playerMove)
+        [HttpGet("{id}/{playerMove}")]
+        public async Task<ActionResult<GameStatsDTO>> PlayRound(int id, string playerMove)
         {     
             if(!_roundService.CheckIfPlayerMoveIsValid(playerMove)){return BadRequest("Invalid move!");}
-
             Round round = _roundService.CreateRound(playerMove);
-            return await _gameService.PlayRound(gameNumber, round);    
+
+            if(!_gameService.CheckIfGameExists(id)){NotFound("Game doesnt exist!");}
+            return await _gameService.PlayRound(id, round);    
         }
 
-        [HttpGet("end/{gameNumber}")]
-        public async Task<ActionResult<GameStatsDTO>> EndGame(int gameNumber)
+        [HttpGet("end/{id}")]
+        public async Task<ActionResult<GameStatsDTO>> EndGame(int id)
         {
-            return await _gameService.EndGame(gameNumber);
+            if(!_gameService.CheckIfGameExists(id)){NotFound("Game doesnt exist!");}
+            return await _gameService.EndGame(id);
         }
     }
 }

@@ -14,9 +14,5 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
         {
         }
 
-        public Task<Round> CreateRound()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

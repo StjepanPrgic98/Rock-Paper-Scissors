@@ -11,8 +11,9 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IServices
     {
         Task<IEnumerable<GameStatsDTO>> GetListOfGames();
         Task<int> StartNewGame();
-        Task<GameStatsDTO> PlayRound(int gameNumber, Round round);
-        Task<GameStatsDTO> EndGame(int gameNumber);
-        Task<GameStatsDTO> GetGameByNumber(int gameNumber);
+        Task<GameStatsDTO> PlayRound(int id, Round round);
+        Task<GameStatsDTO> EndGame(int id);
+        Task<GameStatsDTO> GetGameById(int id);
+        bool CheckIfGameExists(int id);
     }
 }

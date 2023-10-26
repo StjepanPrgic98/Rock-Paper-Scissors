@@ -27,7 +27,7 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
         {
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
-            return game.GameNumber;
+            return game.Id;
         }
 
         public async Task<Game> SaveGame(Game game)
@@ -37,12 +37,16 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
             return game;
         }
 
-        public async Task<Game> GetGameByNumber(int gameNumber)
+        public async Task<Game> GetGameById(int id)
         {
             return await _context.Games
                 .Include(x => x.Rounds)
-                .FirstOrDefaultAsync(x => x.GameNumber == gameNumber);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public bool CheckIfGameExists(int id)
+        {
+            return _context.Games.Any(g => g.Id == id);
+        }
     }
 }

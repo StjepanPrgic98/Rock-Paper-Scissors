@@ -12,6 +12,8 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IRepositories
         Task<IEnumerable<Game>> GetListOfGames();
         Task<int> StartNewGame(Game game);
         Task<Game> SaveGame(Game game);
-        Task<Game> GetGameByNumber(int gameNumber);
+        Task<Game> GetGameById(int id);
+
+        bool CheckIfGameExists(int id);
     }
 }

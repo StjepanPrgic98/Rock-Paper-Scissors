@@ -24,9 +24,9 @@ namespace Rock_Paper_Scissors_Backend.Services
             return GenerateListOfGameData(games.ToList());
         }
 
-        public async Task<GameStatsDTO> GetGameByNumber(int gameNumber)
+        public async Task<GameStatsDTO> GetGameById(int id)
         {
-            GameStatsDTO gameStatsDTO = GenerateGameStats(await _gameRepository.GetGameByNumber(gameNumber));
+            GameStatsDTO gameStatsDTO = GenerateGameStats(await _gameRepository.GetGameById(id));
             return gameStatsDTO;
         }
 
@@ -34,17 +34,15 @@ namespace Rock_Paper_Scissors_Backend.Services
         {
             Game game = new Game
             {
-                GameNumber = await GenerateGameNumber(),
                 Active = true
             };
 
             return await _gameRepository.StartNewGame(game);
         }
 
-        public async Task<GameStatsDTO> PlayRound(int gameNumber, Round round)
+        public async Task<GameStatsDTO> PlayRound(int id, Round round)
         {
-            Game game = await _gameRepository.GetGameByNumber(gameNumber);
-            if(!game.Active){return null;}
+            Game game = await _gameRepository.GetGameById(id);
             game.Rounds.Add(round);
 
             GameStatsDTO gameStatsDTO = GenerateGameStats(await _gameRepository.SaveGame(game));
@@ -52,11 +50,11 @@ namespace Rock_Paper_Scissors_Backend.Services
             return gameStatsDTO;
         }
 
-        public async Task<GameStatsDTO> EndGame(int gameNumber)
+        public async Task<GameStatsDTO> EndGame(int id)
         {
-            Game game = await _gameRepository.GetGameByNumber(gameNumber);
-            if(!game.Active){return null;}
+            Game game = await _gameRepository.GetGameById(id);
             game.Active = false;
+            game.EndTime = DateTime.UtcNow;
 
             GameStatsDTO gameStatsDTO = GenerateGameStats(await _gameRepository.SaveGame(game));
 
@@ -64,26 +62,15 @@ namespace Rock_Paper_Scissors_Backend.Services
         }
 
         // Generates a number between 100000 and 999999 that will be used as unique game number.
-        private async Task<int> GenerateGameNumber()
-        {
-            Random random = new Random();
-            int randomNumber = random.Next(100000, 1000000);
-
-            while(await _gameRepository.GetGameByNumber(randomNumber) != null)
-            {
-                randomNumber = random.Next(100000, 1000000);
-            }
-            
-            return randomNumber;
-        }
-        
 
         private GameStatsDTO GenerateGameStats(Game game)
         {
             GameStatsDTO gameStatsDTO = new GameStatsDTO
             {
-                GameNumber = game.GameNumber,
+                GameId = game.Id,
                 Active = game.Active,
+                StartTime = game.StartTime,
+                EndTime = game.EndTime,
                 NumberOfRounds = game.Rounds.Count,
                 Wins = game.Rounds.Count(x => x.Result == "Victory"),
                 Losses = game.Rounds.Count(x => x.Result == "Loss"),
@@ -123,6 +110,11 @@ namespace Rock_Paper_Scissors_Backend.Services
             }
 
             return gameStatsDTOs;
+        }
+
+        public bool CheckIfGameExists(int id)
+        {
+            return _gameRepository.CheckIfGameExists(id);
         }
     }
 }
