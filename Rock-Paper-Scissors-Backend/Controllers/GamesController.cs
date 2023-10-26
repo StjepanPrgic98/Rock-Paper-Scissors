@@ -21,6 +21,15 @@ namespace Rock_Paper_Scissors_Backend.Controllers
             _gameService = gameService;
         }
 
+        // To start a new game, make a GET request to: http://localhost:5000/api/games/start
+        // This endpoint will return the unique game ID that you'll use in subsequent requests.
+
+        // To play a round, make a GET request to: http://localhost:5000/api/games/{gameId}/{move}
+        // Replace "{gameId}" with the game's unique ID, and "{move}" with your chosen move ("rock," "paper," or "scissors").
+
+        // To end the game, make a GET request to: http://localhost:5000/api/games/end/{gameId}
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameStatsDTO>>> GetListofGames()
         {

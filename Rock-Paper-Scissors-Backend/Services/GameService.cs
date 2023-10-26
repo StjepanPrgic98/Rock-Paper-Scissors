@@ -59,6 +59,18 @@ namespace Rock_Paper_Scissors_Backend.Services
             return gameStatsDTO;
         }
 
+        private List<GameStatsDTO> GenerateListOfGameData(List<Game> games)
+        {
+            List<GameStatsDTO> gameStatsDTOs = new List<GameStatsDTO>();
+
+            foreach (var game in games)
+            {
+                gameStatsDTOs.Add(GenerateGameStats(game));
+            }
+
+            return gameStatsDTOs;
+        }
+
         private GameStatsDTO GenerateGameStats(Game game)
         {
             GameStatsDTO gameStatsDTO = new GameStatsDTO
@@ -94,18 +106,6 @@ namespace Rock_Paper_Scissors_Backend.Services
             }
 
             return roundDTOs;
-        }
-
-        private List<GameStatsDTO> GenerateListOfGameData(List<Game> games)
-        {
-            List<GameStatsDTO> gameStatsDTOs = new List<GameStatsDTO>();
-
-            foreach (var game in games)
-            {
-                gameStatsDTOs.Add(GenerateGameStats(game));
-            }
-
-            return gameStatsDTOs;
         }
 
         public bool CheckIfGameExists(int id)
