@@ -15,5 +15,6 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IServices
         Task<GameStatsDTO> EndGame(int id);
         Task<GameStatsDTO> GetGameById(int id);
         bool CheckIfGameExists(int id);
+        bool CheckIfGameIsActive(int id);
     }
 }

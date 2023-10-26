@@ -15,5 +15,6 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IRepositories
         Task<Game> GetGameById(int id);
 
         bool CheckIfGameExists(int id);
+        bool CheckIfGameIsActive(int id);
     }
 }

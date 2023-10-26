@@ -30,7 +30,7 @@ namespace Rock_Paper_Scissors_Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GameStatsDTO>> GetGameById(int id)
         {
-            if(!_gameService.CheckIfGameExists(id)){NotFound("Game doesnt exist!");}
+            if(!_gameService.CheckIfGameExists(id)){return NotFound("Game doesnt exist!");}
             return await _gameService.GetGameById(id);
         }
 
@@ -46,14 +46,14 @@ namespace Rock_Paper_Scissors_Backend.Controllers
             if(!_roundService.CheckIfPlayerMoveIsValid(playerMove)){return BadRequest("Invalid move!");}
             Round round = _roundService.CreateRound(playerMove);
 
-            if(!_gameService.CheckIfGameExists(id)){NotFound("Game doesnt exist!");}
+            if(!_gameService.CheckIfGameExists(id)){return NotFound("Game doesnt exist!");}
             return await _gameService.PlayRound(id, round);    
         }
 
         [HttpGet("end/{id}")]
         public async Task<ActionResult<GameStatsDTO>> EndGame(int id)
         {
-            if(!_gameService.CheckIfGameExists(id)){NotFound("Game doesnt exist!");}
+            if(!_gameService.CheckIfGameIsActive(id)){return BadRequest("This game is no longer active or doesnt exist!");}
             return await _gameService.EndGame(id);
         }
     }

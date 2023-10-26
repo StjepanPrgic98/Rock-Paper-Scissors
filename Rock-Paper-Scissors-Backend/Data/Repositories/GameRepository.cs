@@ -46,7 +46,12 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
 
         public bool CheckIfGameExists(int id)
         {
-            return _context.Games.Any(g => g.Id == id);
+            return _context.Games.Any(x => x.Id == id);
+        }
+
+        public bool CheckIfGameIsActive(int id)
+        {
+            return _context.Games.Any(x => x.Id == id && x.Active);
         }
     }
 }

@@ -116,5 +116,10 @@ namespace Rock_Paper_Scissors_Backend.Services
         {
             return _gameRepository.CheckIfGameExists(id);
         }
+
+        public bool CheckIfGameIsActive(int id)
+        {
+            return _gameRepository.CheckIfGameIsActive(id);
+        }
     }
 }
