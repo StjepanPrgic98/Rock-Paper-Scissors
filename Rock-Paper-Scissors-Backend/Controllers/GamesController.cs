@@ -22,7 +22,7 @@ namespace Rock_Paper_Scissors_Backend.Controllers
         }
 
         // To start a new game, make a GET request to: http://localhost:5000/api/games/start
-        // This endpoint will return the unique game ID that you'll use in subsequent requests.
+        // This endpoint will return game data and unique game ID that you'll use in subsequent requests.
 
         // To play a round, make a GET request to: http://localhost:5000/api/games/{gameId}/{move}
         // Replace "{gameId}" with the game's unique ID, and "{move}" with your chosen move ("rock," "paper," or "scissors").

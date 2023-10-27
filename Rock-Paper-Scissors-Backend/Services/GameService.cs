@@ -37,8 +37,8 @@ namespace Rock_Paper_Scissors_Backend.Services
                 Active = true,
                 Rounds = new List<Round>()
             };
-            
-            //Save the game first to get the gameId
+
+            //Game is saved in database first to get the gameId
             game = await _gameRepository.StartNewGame(game);
 
             GameStatsDTO gameStatsDTO = GenerateGameStats(game);
