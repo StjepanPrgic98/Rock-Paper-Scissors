@@ -23,11 +23,11 @@ namespace Rock_Paper_Scissors_Backend.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> StartNewGame(Game game)
+        public async Task<Game> StartNewGame(Game game)
         {
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
-            return game.Id;
+            return game;
         }
 
         public async Task<Game> SaveGame(Game game)

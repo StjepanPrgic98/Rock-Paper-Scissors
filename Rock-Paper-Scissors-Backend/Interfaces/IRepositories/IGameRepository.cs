@@ -10,7 +10,7 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IRepositories
     public interface IGameRepository
     {
         Task<IEnumerable<Game>> GetListOfGames();
-        Task<int> StartNewGame(Game game);
+        Task<Game> StartNewGame(Game game);
         Task<Game> SaveGame(Game game);
         Task<Game> GetGameById(int id);
 

@@ -44,7 +44,7 @@ namespace Rock_Paper_Scissors_Backend.Controllers
         }
 
         [HttpGet("start")]
-        public async Task<ActionResult<int>> StartNewGame()
+        public async Task<ActionResult<GameStatsDTO>> StartNewGame()
         {
             return await _gameService.StartNewGame();
         }

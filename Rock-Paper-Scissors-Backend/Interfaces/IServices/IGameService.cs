@@ -10,7 +10,7 @@ namespace Rock_Paper_Scissors_Backend.Interfaces.IServices
     public interface IGameService
     {
         Task<IEnumerable<GameStatsDTO>> GetListOfGames();
-        Task<int> StartNewGame();
+        Task<GameStatsDTO> StartNewGame();
         Task<GameStatsDTO> PlayRound(int id, Round round);
         Task<GameStatsDTO> EndGame(int id);
         Task<GameStatsDTO> GetGameById(int id);

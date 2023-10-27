@@ -30,14 +30,19 @@ namespace Rock_Paper_Scissors_Backend.Services
             return gameStatsDTO;
         }
 
-        public async Task<int> StartNewGame()
+        public async Task<GameStatsDTO> StartNewGame()
         {
             Game game = new Game
             {
-                Active = true
+                Active = true,
+                Rounds = new List<Round>()
             };
+            
+            //Save the game first to get the gameId
+            game = await _gameRepository.StartNewGame(game);
 
-            return await _gameRepository.StartNewGame(game);
+            GameStatsDTO gameStatsDTO = GenerateGameStats(game);
+            return gameStatsDTO;
         }
 
         public async Task<GameStatsDTO> PlayRound(int id, Round round)
@@ -93,20 +98,22 @@ namespace Rock_Paper_Scissors_Backend.Services
         {
             List<RoundDTO> roundDTOs = new List<RoundDTO>();
 
-            foreach (var round in rounds)
+            for (int i = 0; i < rounds.Count; i++)
             {
                 RoundDTO roundDTO = new RoundDTO
                 {
-                    PlayerMove = round.PlayerMove,
-                    PcMove = round.PcMove,
-                    Result = round.Result
+                    RoundNumber = i + 1,
+                    PlayerMove = rounds[i].PlayerMove,
+                    PcMove = rounds[i].PcMove,
+                    Result = rounds[i].Result
                 };
-                
+
                 roundDTOs.Add(roundDTO);
             }
 
             return roundDTOs;
         }
+
 
         public bool CheckIfGameExists(int id)
         {
